@@ -2,3 +2,15 @@ svg {
   margin: 0 auto;
   display: block;
 }
+
+.tick line {
+  stroke: #ccc;
+}
+
+.tick line {
+  stroke: #ccc;
+}
+
+.domain {
+  stroke: #ccc;
+}
