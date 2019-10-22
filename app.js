@@ -1,15 +1,15 @@
 var width = 500;
 var height = 500;
-var padding =50;
+var padding = 50;
 
 var yScale = d3.scaleLinear()
   .domain(d3.extent(regionData, d => 
-    d.subscribersPer100))
+    d.adultLiteracyRate))
   .range([height - padding, padding]);
 
 var xScale = d3.scaleLinear()
   .domain(d3.extent(regionData, d => 
-    d.adultLiteracyRate))
+    d.extremePovertyRate))
   .range([padding, width - padding]);
 
 var xAxis = d3.axisBottom(xScale)
@@ -25,13 +25,13 @@ var yAxis = d3.axisLeft(yScale)
 var colorScale = d3.scaleLinear()
   .domain(d3.extent(
     regionData, d =>
-      d.urbanPopulationRate))
+      d.medianAge))
   .range(['lightgreen', 'blue']);
 
 var radiusScale = d3.scaleLinear()
   .domain(d3.extent(
     regionData, d => 
-      d.extremePovertyRate))
+      d.urbanPopulationRate))
   .range([1, 10]);
 
 d3.select('svg')
@@ -51,10 +51,11 @@ d3.select('svg')
   .data(regionData)
   .enter()
   .append('circle')
-  .attr('cx', d => xScale(d.adultLiteracyRate))
-  .attr('cy', d => yScale(d.subscribersPer100))
-  .attr('fill', d => colorScale(d.urbanPopulationRate))
-  .attr('r', d => radiusScale(d.extremePovertyRate));
+  .attr('cx', d => xScale(d.extremePovertyRate))
+  .attr('cy', d => yScale(d.adultLiteracyRate))
+  .attr('stroke', 'black')
+  .attr('fill', d => colorScale(d.medianAge))
+  .attr('r', d => radiusScale(d.urbanPopulationRate));
 
 d3.select('svg')
   .append('text')
@@ -62,7 +63,7 @@ d3.select('svg')
   .attr('y', height - padding/2)
   .attr('dy', '1.5em')
   .style('text-anchor', 'middle')
-  .text('Adult Literacy Rate');
+  .text('Extreme Poverty Rate');
 
 d3.select('svg')
   .append('text')
@@ -79,7 +80,7 @@ d3.select('svg')
   .attr('y', - (padding - 40 )  /2)
   .attr('dy', '1.5em')
   .style('text-anchor', 'middle')
-  .text('Subscribers per 100');
+  .text('Adult Literacy Rate');
 
 d3.select('svg')
   .append('text')
@@ -87,11 +88,11 @@ d3.select('svg')
   .attr('y', height)
   .attr('dy', '1.5em')
   .style('text-anchor', 'middle')
-  .text('Urban Percentage Population Rate ' + (d3.min(
+  .text('Urban Percentage Population Rate 1 (' + (d3.min(
     regionData, d =>
-      d.urbanPopulationRate)) + ' - ' + (d3.max(
+      d.urbanPopulationRate)) + '%) - 10 (' + (d3.max(
     regionData, d =>
-      d.urbanPopulationRate)));
+      d.urbanPopulationRate)) + '%)');
 
 d3.select('svg')
   .append('text')
@@ -99,8 +100,8 @@ d3.select('svg')
   .attr('y', height + padding/2)
   .attr('dy', '1.5em')
   .style('text-anchor', 'middle')
-  .text('Extreme Poverty Rate ' + (d3.min(
+  .text('Median Age  light green (' + (d3.min(
     regionData, d =>
-      d.extremePovertyRate)) + ' - ' + (d3.max(
+      d.medianAge)) + ') -  blue (' + (d3.max(
     regionData, d =>
-      d.extremePovertyRate)));
+      d.medianAge)) + ')');

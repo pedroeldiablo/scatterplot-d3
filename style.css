@@ -14,3 +14,7 @@ svg {
 .domain {
   stroke: #ccc;
 }
+
+circle {
+  opacity: .8;
+}
