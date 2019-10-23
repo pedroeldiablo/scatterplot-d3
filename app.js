@@ -49,6 +49,10 @@ var radiusScale = d3.scaleLinear()
       d.urbanPopulationRate))
   .range([1, 10]);
 
+var tooltip = d3.select('body')
+  .append('div')
+  .classed('tooltip', true);
+
 d3.select('svg')
   .append('g')
   .attr('transform', 'translate( 0, ' + (height - padding) + ')')
@@ -70,7 +74,18 @@ d3.select('svg')
   .attr('cy', d => yScale(d.adultLiteracyRate))
   .attr('stroke', 'black')
   .attr('fill', d => colorScale(d.medianAge))
-  .attr('r', d => radiusScale(d.urbanPopulationRate));
+  .attr('r', d => radiusScale(d.urbanPopulationRate))
+  .on('mousemove', function(d) {
+    tooltip
+      .style('opacity', 1)
+      .style('left', d3.event.x + 'px')
+      .style('top', d3.event.y + 'px')
+      .text(d.region);
+  })
+  .on('mouseout', function() {
+    tooltip
+      .style('opacity', 0);
+  });
 
 d3.select('svg')
   .append('text')
