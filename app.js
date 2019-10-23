@@ -78,8 +78,8 @@ d3.select('svg')
   .on('mousemove', function(d) {
     tooltip
       .style('opacity', 1)
-      .style('left', d3.event.x + 'px')
-      .style('top', d3.event.y + 'px')
+      .style('left', d3.event.x - (tooltip.node().offsetWidth /2) + 'px')
+      .style('top', d3.event.y + 25 + 'px')
       .html(`
       <p>Region: ${d.region}</p>
       <p>Adult Literacy Rate: ${d.adultLiteracyRate}%</p>
