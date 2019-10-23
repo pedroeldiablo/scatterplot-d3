@@ -75,24 +75,10 @@ d3.select('svg')
   .attr('stroke', 'black')
   .attr('fill', d => colorScale(d.medianAge))
   .attr('r', d => radiusScale(d.urbanPopulationRate))
-  .on('mousemove', function(d) {
-    tooltip
-      .style('opacity', 1)
-      .style('left', d3.event.x - (tooltip.node().offsetWidth /2) + 'px')
-      .style('top', d3.event.y + 25 + 'px')
-      .html(`
-      <p>Region: ${d.region}</p>
-      <p>Adult Literacy Rate: ${d.adultLiteracyRate}%</p>
-      <p>Urban Population Rate: ${d.urbanPopulationRate}%</p>
-      <p>Median Age: ${d.medianAge}</p>
-      <p>Extreme Poverty Rate: ${d.extremePovertyRate}%</p>
-      <p>Growth Rate: ${d.growthRate} per annum</p>
-      `);  
-  })
-  .on('mouseout', function() {
-    tooltip
-      .style('opacity', 0);
-  });
+  .on('mousemove', showToolTip)
+  .on('touchStart', showToolTip)
+  .on('mouseout', hideToolTip)
+  .on('touchEnd', hideToolTip);
 
 d3.select('svg')
   .append('text')
@@ -142,3 +128,23 @@ d3.select('svg')
       d.medianAge)) + ') -  blue (' + (d3.max(
     data, d =>
       d.medianAge)) + ')');
+
+function showToolTip(d) {
+  tooltip
+    .style('opacity', 1)
+    .style('left', d3.event.x - (tooltip.node().offsetWidth /2) + 'px')
+    .style('top', d3.event.y + 25 + 'px')
+    .html(`
+      <p>Region: ${d.region}</p>
+      <p>Adult Literacy Rate: ${d.adultLiteracyRate}%</p>
+      <p>Urban Population Rate: ${d.urbanPopulationRate}%</p>
+      <p>Median Age: ${d.medianAge}</p>
+      <p>Extreme Poverty Rate: ${d.extremePovertyRate}%</p>
+      <p>Growth Rate: ${d.growthRate} per annum</p>
+    `);  
+}
+
+function hideToolTip() {
+  tooltip
+    .style('opacity', 0);
+}
