@@ -80,7 +80,14 @@ d3.select('svg')
       .style('opacity', 1)
       .style('left', d3.event.x + 'px')
       .style('top', d3.event.y + 'px')
-      .text(d.region);
+      .html(`
+      <p>Region: ${d.region}</p>
+      <p>Adult Literacy Rate: ${d.adultLiteracyRate}%</p>
+      <p>Urban Population Rate: ${d.urbanPopulationRate}%</p>
+      <p>Median Age: ${d.medianAge}</p>
+      <p>Extreme Poverty Rate: ${d.extremePovertyRate}%</p>
+      <p>Growth Rate: ${d.growthRate} per annum</p>
+      `);  
   })
   .on('mouseout', function() {
     tooltip
